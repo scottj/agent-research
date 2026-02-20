@@ -206,6 +206,62 @@ The session reset timer feature calls an external tool (`ccusage`) maintained by
 
 ---
 
+## Source File Inventory
+
+All source files reviewed directly during analysis:
+
+| File | Size | Role |
+|------|------|------|
+| `src/index.ts` | 1,320 B | CLI entry point (Commander.js) |
+| `src/cli/commands.ts` | 8,001 B | init command; jq check; install orchestration |
+| `src/cli/prompts.ts` | 3,276 B | Inquirer interactive prompts; feature selection |
+| `src/cli/preview.ts` | 3,561 B | Preview command; bash subprocess with mock data |
+| `src/generators/bash-generator.ts` | 12,614 B | Core: assembles statusline.sh from TypeScript templates |
+| `src/features/usage.ts` | 8,217 B | Generates bash for cost/token/session metrics |
+| `src/features/git.ts` | 1,198 B | Generates bash for git branch detection |
+| `src/features/colors.ts` | 2,380 B | Generates ANSI color code bash functions |
+| `src/utils/installer.ts` | 4,914 B | Writes statusline.sh and settings.json |
+| `src/utils/tester.ts` | 6,321 B | Spawns bash subprocess for script testing |
+| `src/utils/validator.ts` | 2,110 B | Validates user config selections |
+| `.claude/statusline.sh` | 11,796 B | Example generated output script |
+| `.claude/settings.json` | 105 B | Sample Claude Code settings |
+| `.claude/settings.local.json` | 639 B | Author dev config (contains committed API key) |
+| `test/test-installation.sh` | 9,711 B | Shell tests for installation scenarios |
+| `test/test-concurrent-locking.sh` | 1,586 B | Tests concurrent process locking |
+| `test/test-statusline-with-lock.sh` | 1,945 B | Tests statusline + locking behavior |
+
+---
+
+## Shell Commands Executed by the Generated statusline.sh
+
+The generated script uses only these system tools:
+
+```
+jq                 # JSON parsing (optional; falls back to grep/sed)
+git rev-parse      # Current git branch
+date / gdate       # Timestamp conversion
+python3 -c         # Date epoch fallback on some systems
+grep, sed, tr, awk # Standard POSIX text processing
+command -v         # Tool availability check
+ccusage blocks     # Optional; session reset time only; 5s timeout guard
+timeout / gtimeout # Execution timeout for ccusage
+```
+
+No tool receives user-controlled input that is then passed to the shell (no command injection vector). All dynamic values from parsed JSON are used for display/arithmetic only.
+
+---
+
+## Changelog Highlights (Security-Relevant)
+
+| Version | Change |
+|---------|--------|
+| v1.4.0 (2025-12-24) | Token stats now use Claude Code native data; ccusage only for session reset (off by default) |
+| v1.3.2 | Fixed quote-escaping vulnerability in bash JSON fallback parser |
+| v1.2.3 | Fixed critical bug: ccusage was spawning uncontrolled background processes; added file-based locking with PID tracking |
+| v1.2.4 | Added global vs project-level installation choice |
+
+---
+
 ## Recommendation
 
 **Safe to run on a personal workstation.** The tool is a legitimate productivity enhancement for Claude Code users. Install it via `npx` if you want to try it without permanently installing.

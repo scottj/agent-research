@@ -140,3 +140,102 @@ The statusline.sh script:
 The tool is legitimate, does what it says, has no malware characteristics, and poses
 low security risk for personal use. The main concerns are minor operational hygiene
 issues (committed API key, log growth), not fundamental security problems.
+
+---
+
+## 2026-02-20 - Full Source Analysis (Second Pass)
+
+Fetched all source files via GitHub API and raw content URLs. Augmenting notes with
+deeper analysis of each file.
+
+### Additional Files Reviewed
+
+**src/index.ts**
+- Entry point, sets up Commander.js with init/preview/test commands
+- `init` command writes to `.claude/statusline.sh` (default)
+- `preview` command reads and runs an existing statusline.sh with mock data
+- `test` command is a stub (prints "coming soon")
+
+**src/cli/commands.ts**
+- `checkJqInstallation()` runs `command -v jq` - standard and safe
+- `initCommand()` orchestrates: checks jq, collects config, generates script, installs
+- Checks both global (~/.claude) and project-level (.claude) installs
+- Shows next-steps instructions to user
+
+**src/cli/prompts.ts**
+- Uses Inquirer for interactive checkbox/list prompts
+- 8 feature options: working directory, git branch, model name, context %, cost, tokens,
+  burn rate, session reset time
+- Validates at least one feature selected
+- Enables ccusage integration only if session reset is chosen
+
+**src/cli/preview.ts**
+- Reads existing statusline.sh from disk with fs.readFile()
+- Executes it with `spawn('bash', [scriptPath])` with piped I/O
+- Uses mock Claude Code JSON data
+- 5-second timeout
+
+**src/generators/bash-generator.ts**
+- Core of the tool - assembles bash script from TypeScript template strings
+- No eval of user input; builds the script text statically
+- Script receives data via stdin only (Claude Code pipes JSON)
+
+**src/features/usage.ts**
+- Generates bash code for cost/token display
+- Uses `ccusage blocks --json` with timeout guard (5s via `timeout` or `gtimeout`)
+- Since v1.4.0 tokens/TPM use CC native data (no ccusage needed for those)
+
+**src/features/git.ts**
+- Generates bash code running `git rev-parse --abbrev-ref HEAD`
+- Simple, standard git usage
+
+**src/features/colors.ts**
+- Generates ANSI color code bash functions
+- Respects NO_COLOR env variable
+- 256-color ANSI codes for terminal display
+
+**src/utils/installer.ts**
+- Creates .claude/ directory with mkdir -p
+- Writes statusline.sh with 0o755 permissions
+- Reads and updates settings.json (JSON parse/stringify)
+- Platform-aware: different command for Windows vs Unix
+
+**src/utils/tester.ts**
+- Creates temp file in /tmp with 0o755
+- Spawns bash subprocess
+- 5-second timeout with process kill
+- Cleanup of temp files
+
+**src/utils/validator.ts**
+- Validates config structure
+- Warns about performance (>5 features)
+- Note: validateDependencies() currently returns placeholders
+
+**.claude/statusline.sh** (example generated script)
+- 11,796 bytes
+- Self-contained bash script
+- No network calls
+- Reads stdin once (`input=$(cat)`)
+- Runs: jq, git, date, grep, sed, tr, awk
+- Optionally logs to statusline.log
+- Only outputs formatted text to stdout
+
+**.claude/settings.json**
+```json
+{"statusLine": {"type": "command", "command": ".claude/statusline.sh", "padding": 0}}
+```
+
+**.claude/settings.local.json** (developer's local config)
+- Contains CONTEXT7_API_KEY = ctx7sk-6ac2f7e9-685d-445c-aaab-6cbfc1fca9f7
+- Very permissive Claude Code tool permissions (Bash:*, curl:*)
+- This is the repo author's dev environment config - NOT what gets installed on user machines
+- It was accidentally committed to the public repo (security hygiene issue)
+
+### GitHub Actions Workflows
+Two workflow files exist:
+- claude.yml - uses anthropics/claude-code-action@beta for issue handling
+- claude-code-review.yml - automated PR review
+Both only run in CI (GitHub Actions). Not relevant to end-user security.
+
+### Final Determination
+Safe to run on a personal workstation. No malware characteristics. Benign statusline tool.
