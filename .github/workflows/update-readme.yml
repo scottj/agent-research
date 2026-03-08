@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r .sctipts/requirements.txt
+          pip install -r .scripts/requirements.txt
 
       - name: Run cogapp to update README
         env:
