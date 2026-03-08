@@ -35,6 +35,9 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: JavaScript Footer
+        run: |
+          sh .scripts/build-footer.sh
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
