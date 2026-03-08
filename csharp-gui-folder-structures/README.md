@@ -1,5 +1,10 @@
 # C# GUI App Folder Structures: A Field Guide
 
+<!-- AI-GENERATED-NOTE -->
+> [!NOTE]
+> This is an AI-generated research report. All text and code in this report was created by an LLM (Large Language Model). For more information on how these reports are created, see the [main research repository](https://github.com/scottj/agent-research).
+<!-- /AI-GENERATED-NOTE -->
+
 > **Focus:** What's actually used, what's gaining steam, and what's considered a relic.
 > **Frameworks covered:** WPF · WinUI 3 · .NET MAUI · Avalonia UI
 > **Date:** February 2026

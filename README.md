@@ -167,6 +167,41 @@ for dirname, _ in subdirs_with_dates:
             readme_path.write_text('\n'.join(new_lines))
 
 ]]]-->
+## 3 research projects
+
+### [Cross-Platform Desktop Framework Analysis (2026)](https://github.com/scottj/agent-research/tree/main/desktop-framework-analysis#readme) (2026-02-27 14:24)
+
+Evaluating cross-platform desktop frameworks in 2026 reveals a maturing ecosystem with compelling choices for different developer backgrounds and deployment needs. Tauri v2 stands out for its tiny binaries, Rust-powered security, and new mobile support, making it ideal for web developers seeking performance and portability. Electron remains dominant due to its vast npm ecosystem despite its heavy resource use, while Qt continues to offer the most native look and best performance for traditional desktop apps, albeit with increased licensing complexity. For C# developers, Avalonia UI is now preferred over .NET MAUI for cross-platform reach, with MAUI retaining value for mobile-centric solutions. Choosing the right framework hinges on priorities like bundle size, native integration, target OSes, and licensing constraints.
+
+**Key findings:**
+- Tauri v2 and Neutralinojs deliver the smallest binaries; Tauri also supports mobile from a single codebase ([Tauri](https://tauri.app/)).
+- Qt 6 and wxWidgets offer the most native UI and performance across platforms, but require familiarity with C++/Python and handle more complex licensing ([Qt](https://www.qt.io/)).
+- Electron remains the web ecosystem giant at the cost of size and RAM.
+- Avalonia UI is the top .NET option for cross-platform desktop, notably supporting Linux.
+- Wails is optimal for Go developers seeking a modern web-based UI.
+- No single framework is “best” for all cases; practical considerations around language, UI fidelity, and ecosystem should guide selection.
+
+### [Analysis Report: chongdashu/cc-statusline](https://github.com/scottj/agent-research/tree/main/cc-statusline-analysis#readme) (2026-02-20 03:49)
+
+Designed to enhance Claude Code’s terminal interface, `cc-statusline` is a CLI tool that generates a customizable bash statusline displaying real-time session data, git branch info, cost, token metrics, and optionally session reset timers. The tool installs via a simple command (`npx @chongdashu/cc-statusline@latest init`), guides users through feature selection, and writes a generated bash script to their `.claude/` directory, modifying settings minimally and responsibly. Its runtime behavior is secure: it parses JSON input from Claude Code using `jq` or bash tools, displays data without executing user input, and makes no network calls, ensuring low risk for personal use. Optional features, like session reset timers, require external dependencies (e.g., [`ccusage`](https://github.com/ryoppippi/ccusage)), but are opt-in and guarded against hangs. Open source and MIT-licensed, the project is actively maintained, with clear code structure and prompt bug fixes.
+
+Key findings:
+- No network access or elevated privileges required; writes scoped to `.claude/`
+- Committed API key in dev config (`settings.local.json`) poses no user risk but highlights hygiene
+- Optional logging can be disabled; log file contains only local session info
+- Main dependency (`ccusage`) for reset timer is separate; most users won’t need it
+- See the [GitHub repository](https://github.com/chongdashu/cc-statusline) for code and issues
+
+### [C# GUI App Folder Structures: A Field Guide](https://github.com/scottj/agent-research/tree/main/csharp-gui-folder-structures#readme) (2026-02-19 00:20)
+
+C# GUI application development today is defined by a mix of legacy MVVM patterns, modular architectures, and modern, feature-centric folder structures across frameworks like WPF, WinUI 3, .NET MAUI, and Avalonia UI. While classic layer-based MVVM is still widely used for its familiarity, contemporary projects increasingly favor feature folders, vertical slice architecture, or clean architecture for improved scalability, testability, and developer onboarding. Multi-project splits (core logic + UI) are now recommended by Microsoft and embraced in flagship apps like [Files](https://github.com/files-community/Files), while community favorites like [Avalonia](https://github.com/AvaloniaUI/Avalonia) are pioneering cross-platform design patterns. Generally, feature-focused organization and clean separation of concerns are seen as best practices, and pragmatic teams start simple, evolving their structure as the app grows.
+
+**Key Findings:**
+- Feature folders and vertical slices are gaining popularity for their clarity, cohesion, and scalability.
+- Multi-project (Core + UI) architecture is the mainstream recommendation for cross-platform and testable apps.
+- Prism module approach remains relevant for plugin-heavy enterprise applications but is rarely chosen for greenfield projects.
+- Layer-centric MVVM, while still present, is considered dated for new development.
+- Active community frameworks and tooling impose little structural opinion, placing architectural responsibility on developers.
 
 <!--[[[end]]]-->
 

@@ -1,5 +1,10 @@
 # Cross-Platform Desktop Framework Analysis (2026)
 
+<!-- AI-GENERATED-NOTE -->
+> [!NOTE]
+> This is an AI-generated research report. All text and code in this report was created by an LLM (Large Language Model). For more information on how these reports are created, see the [main research repository](https://github.com/scottj/agent-research).
+<!-- /AI-GENERATED-NOTE -->
+
 **Date:** 2026-02-27
 **Task:** Evaluate options for building cross-platform desktop applications targeting macOS and Windows
 

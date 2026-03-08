@@ -1,5 +1,10 @@
 # Analysis Report: chongdashu/cc-statusline
 
+<!-- AI-GENERATED-NOTE -->
+> [!NOTE]
+> This is an AI-generated research report. All text and code in this report was created by an LLM (Large Language Model). For more information on how these reports are created, see the [main research repository](https://github.com/scottj/agent-research).
+<!-- /AI-GENERATED-NOTE -->
+
 **Repository:** https://github.com/chongdashu/cc-statusline
 **Analyzed:** 2026-02-20
 **Version at time of analysis:** 1.4.0
