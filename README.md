@@ -167,7 +167,11 @@ for dirname, _ in subdirs_with_dates:
             readme_path.write_text('\n'.join(new_lines))
 
 ]]]-->
-## 3 research projects
+## 4 research projects
+
+### [_layouts](https://github.com/scottj/agent-research/tree/main/_layouts#readme) (2026-04-17 23:18)
+
+*No description available.*
 
 ### [Cross-Platform Desktop Framework Analysis (2026)](https://github.com/scottj/agent-research/tree/main/desktop-framework-analysis#readme) (2026-02-27 14:24)
 
