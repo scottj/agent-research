@@ -19,7 +19,12 @@ research_dir = pathlib.Path.cwd()
 subdirs_with_dates = []
 
 for d in research_dir.iterdir():
-    if d.is_dir() and not d.name.startswith('.') and not d.name.startswith('_'):
+    if (
+        d.is_dir()
+        and not d.name.startswith('.')
+        and not d.name.startswith('_')
+        and not d.name.startswith('assets')
+    ):
         # Get the date of the first commit that touched this directory
         try:
             result = subprocess.run(

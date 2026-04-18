@@ -1,0 +1,80 @@
+---
+---
+
+@import "jekyll-theme-primer";
+
+/* Base fallback */
+:root {
+  color-scheme: light dark;
+}
+
+/* Light theme defaults */
+html[data-color-mode="light"] {
+  --page-bg: #ffffff;
+  --page-fg: #24292f;
+  --page-muted: #57606a;
+  --page-border: #d0d7de;
+  --page-link: #0969da;
+}
+
+/* Dark theme defaults */
+html[data-color-mode="dark"] {
+  --page-bg: #0d1117;
+  --page-fg: #c9d1d9;
+  --page-muted: #8b949e;
+  --page-border: #30363d;
+  --page-link: #58a6ff;
+}
+
+/* Automatic fallback if JS is unavailable */
+@media (prefers-color-scheme: dark) {
+  html:not([data-color-mode]) {
+    --page-bg: #0d1117;
+    --page-fg: #c9d1d9;
+    --page-muted: #8b949e;
+    --page-border: #30363d;
+    --page-link: #58a6ff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-color-mode]) {
+    --page-bg: #ffffff;
+    --page-fg: #24292f;
+    --page-muted: #57606a;
+    --page-border: #d0d7de;
+    --page-link: #0969da;
+  }
+}
+
+/* Apply your colors to the rendered page */
+body {
+  background-color: var(--page-bg);
+  color: var(--page-fg);
+}
+
+a {
+  color: var(--page-link);
+}
+
+hr,
+table th,
+table td,
+pre,
+code {
+  border-color: var(--page-border);
+}
+
+p,
+li,
+td,
+th,
+blockquote {
+  color: var(--page-fg);
+}
+
+small,
+.text-gray,
+.text-gray-light {
+  color: var(--page-muted) !important;
+}
