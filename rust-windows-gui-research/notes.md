@@ -1,0 +1,98 @@
+# Rust Windows GUI Research Notes
+
+## 2026-04-17
+
+- Created the research workspace folder `rust-windows-gui-research`.
+- Goal: compare Rust options for building Windows GUI apps, with extra weight on native code, low overhead, and performance.
+- Plan: use primary sources for each framework (official docs, repos, or project books), then summarize tradeoffs in `README.md`.
+- Primary-source findings so far:
+  - `windows` / `windows-sys`:
+    - Microsoft Learn says the `windows` crate lets Rust call any Windows API directly, covering classic windowing APIs like `CreateWindowExW` and newer UI frameworks such as Composition.
+    - This is the lowest-level and most native route, but it is also the most manual.
+  - `native-windows-gui` (NWG):
+    - Official README describes NWG as a "very light wrapper over WINAPI" with "small compile times" and "minimal resource usage".
+    - The same README says this is the "3rd and final version", "mature", and that future development will happen in other libraries.
+    - Good fit if Windows-only and classic Win32/native controls are acceptable.
+  - `winsafe`:
+    - Official docs describe it as "Windows API and GUI in safe, idiomatic Rust" with both low-level Win32 bindings and high-level GUI structs for native Win32 apps.
+    - The GUI layer supports native controls and `.res` resource files.
+    - Looks like the best current Rust-native Win32 wrapper if we want more safety/ergonomics than raw `windows`.
+  - `Slint`:
+    - Official docs show Windows uses the `native` style alias mapped to `fluent`, not actual Win32 controls.
+    - Backends/renderers are flexible: `winit` backend, software renderer, FemtoVG, or Skia.
+    - Slint is native code and performance-oriented, but it is custom-rendered UI rather than real Windows widgets.
+  - `egui` / `eframe`:
+    - egui officially says "If you want a GUI that looks native, egui is not for you."
+    - Good for internal tools, inspectors, and graphics-heavy apps; not ideal if native Windows look/behavior matters.
+  - `iced`:
+    - Official README emphasizes cross-platform rendering with `wgpu` or `tiny-skia`.
+    - Also explicitly says it is still experimental software.
+    - More polished than many Rust GUI experiments, but still not a Windows-native widget toolkit.
+  - `FLTK-rs`:
+    - Official site emphasizes lightweight binaries (around 1 MB after stripping), fast startup, and single-executable deployment.
+    - Still not true Windows-native widgets; it is the FLTK toolkit with Rust bindings.
+  - `Tauri` / `Wry` / `Tao`:
+    - Official Tauri site says apps use the OS native web renderer and can be as small as 600 KB.
+    - This is lightweight compared to Electron, but still a WebView stack, not native widgets.
+    - Good if HTML/CSS/JS is desired; weaker fit for "native-code native-widget" preference.
+  - `Dioxus Desktop`:
+    - Official docs say it renders using the platform's native WebView implementation and is built on Tauri/Wry/Tao.
+    - Therefore it is also a WebView route, not a native Windows-control route.
+  - `Xilem`:
+    - Official repo calls it an experimental Rust native UI framework built on `winit`, `Vello`, and `wgpu`.
+    - Interesting long-term project, but still early for production selection.
+  - `Druid`:
+    - Official repo marks it `UNMAINTAINED` and discontinued.
+    - Useful historical reference only; not a candidate for new work.
+  - `GPUI`:
+    - Official docs say it is pre-1.0, actively changing, and currently requires macOS or Linux.
+    - Not a real Windows option yet despite broader interest.
+- Working conclusion before writing the report:
+  - For the stated preference, the strongest shortlist is:
+    - raw `windows` / `windows-sys` for maximum native fidelity and minimum abstraction;
+    - `winsafe` for the best balance of native Win32 + safer Rust ergonomics;
+    - `native-windows-gui` for a pragmatic, Windows-only native-controls toolkit when its mature/final-state tradeoff is acceptable.
+  - `Slint` is the best non-WebView native-code alternative when custom-rendered UI is acceptable.
+  - `Tauri`/`Dioxus Desktop` are small and practical, but they do not match a native-widget preference.
+- Wrote `README.md` with:
+  - a ranked recommendation for this specific preference;
+  - a decision matrix covering native-widget, custom-rendered, and WebView options;
+  - notes on projects to watch or avoid (`Xilem`, `Druid`, `GPUI`);
+  - source links for the official docs and repos used during research.
+- Final folder contents kept intentionally small: `notes.md` and `README.md`.
+- Follow-up freshness/sustainability pass after user asked about likely staying power:
+  - `windows` / `windows-rs`:
+    - Docs.rs shows version `0.62.2` released on `2025-10-06`.
+    - GitHub releases page shows numbered releases continuing through `2025-09-25`.
+    - Strongest long-term confidence due Microsoft ownership and foundational role.
+  - `winsafe`:
+    - Docs.rs shows rapid recent releases: `0.0.23` on `2025-03-01`, `0.0.24` on `2025-06-01`, `0.0.25` on `2025-07-01`, `0.0.26` on `2025-10-01`, and `0.0.27` on `2026-01-01`.
+    - Fresh, but still a niche project with much smaller ecosystem/backing than `windows`.
+  - `native-windows-gui`:
+    - Docs.rs shows latest crate release `1.0.13` on `2022-09-05`.
+    - Project explicitly says development is "done" and future development will happen in other libraries.
+    - That means stable/usable, but weak on future momentum.
+  - `Slint`:
+    - Docs.rs build page shows `1.16.0` built on `2026-04-16`.
+    - GitHub/org pages show active updates and company identity (`slint-ui` organization / company profile).
+    - Strong medium-to-high confidence if custom-rendered UI is acceptable.
+  - `Tauri`:
+    - Docs.rs shows `tauri 2.10.3` released on `2026-03-04`.
+    - GitHub shows large contributor base and very high ecosystem momentum.
+    - Excellent staying power, but still WebView-based.
+  - `Dioxus Desktop`:
+    - Docs.rs shows `0.7.5` on `2026-04-06`; org page says there is a small full-time team.
+    - Active, but desktop is still a WebView-oriented path.
+  - `egui` / `eframe`:
+    - Docs.rs shows `eframe 0.34.1` on `2026-03-27`.
+    - GitHub shows a large contributor base and continuing releases.
+    - Strong staying power, but not native-looking/native-widget focused.
+  - `iced`:
+    - Docs.rs shows `0.14.0` from late 2025 / early 2026 docs generation, GitHub release pages showed `0.13.1` in `2025-09`.
+    - Active enough to matter, but still explicitly experimental.
+  - Sustainability-adjusted conclusion:
+    - If weighting "likely to still matter in a few years" more heavily than strict native controls:
+      - `windows` / `windows-sys` moves clearly to the top.
+      - `Slint` becomes much more attractive than `native-windows-gui`.
+      - `Tauri` remains very durable but still misses the native-widget preference.
+      - `winsafe` stays interesting but with more bus-factor risk than first-party or org-backed options.
