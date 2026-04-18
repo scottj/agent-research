@@ -1,5 +1,6 @@
 Start by creating a new top-level folder for your work with an appropriate name
-that reflects the topic being researched.
+that reflects the topic being researched. Do not include the word research in
+the folder name.
 
 Create a notes.md file in that folder and append notes to it as you work, tracking what you tried and anything you learned along the way.
 
