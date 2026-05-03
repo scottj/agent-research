@@ -14,7 +14,7 @@
 - Identified the strongest current alternative in the same “HTML + inline CSS + inline JS” category: `@minify-html/node` / `minify-html`.
   - Official docs describe it as a Rust minifier optimized for both speed and effectiveness.
   - It uses `oxc` for JS and `lightningcss` for CSS.
-  - It explicitly claims support for invalid HTML and common template delimiters like `{{ }}`, `{% %}`, `{# #}`, and `<% %>`.
+  - It explicitly claims support for invalid HTML and common template delimiters.
   - It exposes more “spec-compliant vs more aggressive” switches than `html-minifier-terser`, including explicitly noncompliant-but-browser-safe modes.
   - It has a `onepass` variant that is even more speed-focused.
 - Identified `htmlnano` as the other serious modern option:
