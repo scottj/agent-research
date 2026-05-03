@@ -1,5 +1,10 @@
 # Minification Tools Compared
 
+<!-- AI-GENERATED-NOTE -->
+> [!NOTE]
+> This is an AI-generated research report. All text and code in this report was created by an LLM (Large Language Model). For more information on how these reports are created, see the [main research repository](https://github.com/scottj/agent-research).
+<!-- /AI-GENERATED-NOTE -->
+
 ## Bottom line
 
 If you like `html-minifier-terser` because one tool can handle HTML plus inline JS and CSS, the most relevant alternatives are:
