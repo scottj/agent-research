@@ -58,7 +58,7 @@ What to watch:
 Why it stands out:
 
 - It is the strongest alternative if you care about speed and resilience.
-- Its docs explicitly say it handles invalid HTML and common template syntaxes like `{{ }}`, `{% %}`, `{# #}`, and `<% %>`.
+- Its docs explicitly say it handles invalid HTML and common template syntaxes like `{% raw %}{{ }}{% endraw %}`, `{% raw %}{% %}{% endraw %}`, `{# #}`, and `<% %>`.
 - It uses modern CSS/JS minifiers (`lightningcss` and, in the current repo/docs I checked, `oxc` for JS).
 
 What to watch:

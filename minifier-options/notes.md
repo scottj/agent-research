@@ -11,11 +11,11 @@
   - It supports ignore fragments such as `<% ... %>` and `<? ... ?>`.
   - Its documentation explicitly says it cannot faithfully preserve invalid or partial HTML fragments because it parses to a tree and serializes back out.
   - GitHub releases show `v7.2.0` as the latest tagged release visible in the release list snippet I checked, but the search snippets mix cached/current metadata, so avoid overclaiming on exact recency without a cleaner package/release endpoint.
-- Identified the strongest current alternative in the same “HTML + inline CSS + inline JS” category: `@minify-html/node` / `minify-html`.
+- Identified the strongest current alternative in the same "HTML + inline CSS + inline JS" category: `@minify-html/node` / `minify-html`.
   - Official docs describe it as a Rust minifier optimized for both speed and effectiveness.
   - It uses `oxc` for JS and `lightningcss` for CSS.
-  - It explicitly claims support for invalid HTML and common template delimiters.
-  - It exposes more “spec-compliant vs more aggressive” switches than `html-minifier-terser`, including explicitly noncompliant-but-browser-safe modes.
+  - It explicitly claims support for invalid HTML and common template delimiters like `{% raw %}{{ }}{% endraw %}`, `{% raw %}{% %}{% endraw %}`, `{# #}`, and `<% %>`.
+  - It exposes more "spec-compliant vs more aggressive" switches than `html-minifier-terser`, including explicitly noncompliant-but-browser-safe modes.
   - It has a `onepass` variant that is even more speed-focused.
 - Identified `htmlnano` as the other serious modern option:
   - Official docs describe it as a modular minifier built on PostHTML with safe-by-default presets.
@@ -34,13 +34,13 @@
   - Move to `htmlnano` for modularity, safer presets, and bundler/PostHTML integration.
 - Found a fourth option worth elevating into the main comparison: `html-minifier-next`.
   - Official repo positions it as an enhanced successor of `html-minifier-terser` and `html-minifier`.
-  - It keeps the same general “highly configurable tree-based HTML minifier” model and explicitly aims for backward compatibility.
+  - It keeps the same general "highly configurable tree-based HTML minifier" model and explicitly aims for backward compatibility.
   - Compared with `html-minifier-terser`, it swaps CSS minification to Lightning CSS, keeps JS minification via Terser, adds ReDoS protections, and adds newer operational niceties like presets, dry runs, directory processing, and verbose stats.
   - It still has the same core limitation as the original family: it cannot preserve invalid or partial HTML fragments because it parses to a tree and serializes back out.
   - This makes it the strongest candidate for users who like the current behavior model but want the same general model with newer operational features and ongoing evolution.
 - Refined comparison framing:
   - `html-minifier-terser`: conservative answer if compatibility with existing configs/output matters most.
-  - `html-minifier-next`: best “same family, actively evolving” replacement.
+  - `html-minifier-next`: best "same family, actively evolving" replacement.
   - `@minify-html/node`: best performance- and tolerance-oriented alternative if malformed HTML/template-heavy inputs matter.
   - `htmlnano`: best modular option when PostHTML/bundler integration and selective transforms matter more than drop-in parity.
 - Probably de-emphasize older/less compelling options in the final report:
