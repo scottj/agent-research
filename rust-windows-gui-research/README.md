@@ -1,5 +1,10 @@
 # Rust GUI Options for Windows
 
+<!-- AI-GENERATED-NOTE -->
+> [!NOTE]
+> This is an AI-generated research report. All text and code in this report was created by an LLM (Large Language Model). For more information on how these reports are created, see the [main research repository](https://github.com/scottj/agent-research).
+<!-- /AI-GENERATED-NOTE -->
+
 Research date: 2026-04-17
 
 ## Bottom Line
